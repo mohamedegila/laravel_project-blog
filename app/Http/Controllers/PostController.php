@@ -19,7 +19,7 @@ class PostController extends Controller
     public function show($postid){
 
         $post=['id' => 3,'title' => "Java", 'discription' => "programming lang",'creator-name' => "Ali",'creator-email' => "Ali@gmail.com",'created-at' => "2021-11-10"];
-        return view('posts.show',['post' => $post]);;
+        return view('posts.show',['post' => $post]);
     }
 
     public function create(){
@@ -27,13 +27,19 @@ class PostController extends Controller
        return view('posts.create');
     }
 
-    public function update(){
+    public function edit(){
 
-        return view('posts.update');
+        $post=['id' => 3,'title' => "Java", 'discription' => "programming lang",'creator-name' => "Ali",'creator-email' => "Ali@gmail.com",'created-at' => "2021-11-10"];
+        return view('posts.edit',['post' => $post]);
      }
  
 
     public function store(){
+
+        return redirect()->route('posts.index');
+     }
+
+     public function update(){
 
         return redirect()->route('posts.index');
      }
