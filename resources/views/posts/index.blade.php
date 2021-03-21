@@ -28,7 +28,7 @@
             <x-button class="primary" rout="{{ route('posts.edit',['post' => $post->id]) }}">Edit</x-button>
             {{-- <x-button class="danger" rout="#">Delete</x-button> --}}
 
-            <form id="delete-{{$post->id}}" action="{{route('posts.destroy',$post->id)}}" style="display: none;" method="delete">
+            <form id="delete-{{$post->id}}" action="{{route('posts.destroy',$post->id)}}" style="display: none;" method="POST">
               @csrf
               @method('DELETE')
              </form>

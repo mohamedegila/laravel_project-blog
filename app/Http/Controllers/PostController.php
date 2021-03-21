@@ -30,8 +30,8 @@ class PostController extends Controller
     public function edit($postid)
     {
         $post= Post::find($postid);
-        // $users= User::all();
-        return view('posts.edit', ['post' => $post]);
+        $users= User::all();
+        return view('posts.edit', ['post' => $post,'users' =>  $users]);
     }
 
     public function store(Request $request)
@@ -45,17 +45,18 @@ class PostController extends Controller
     public function update(Request $request)
     {
         $requestData = $request->all();
-        dd($requestData);
-        // PostDB::update('update users set votes = 100 where name = ?', ['John']);
-       // return redirect()->route('posts.index');
+        $postid = $requestData['id'];
+        $post= Post::find($postid);
+        $post->update($requestData);
+        // dd($requestData);
+        // // PostDB::update('update users set votes = 100 where name = ?', ['John']);
+        return redirect()->route('posts.index');
     }
 
     public function destroy($postid)
     {
-        //$requestData = $request->all();
-        //dd($requestData);
-        Post::delete($postid);
-        // PostDB::update('update users set votes = 100 where name = ?', ['John']);
-       // return redirect()->route('posts.index');
+        $post= Post::find($postid);
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }
