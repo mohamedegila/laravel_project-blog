@@ -19,18 +19,41 @@
             
       
       <tr>
-        <th scope="row">{{ $post['id'] }}</th>
-        <td>{{ $post['title'] }}</td>
-        <td>{{ $post['creator-name'] }}</td>
-        <td>{{ $post['created-at'] }}</td>
+        <th scope="row">{{ $post->id }}</th>
+        <td>{{ $post->title }}</td>
+        <td>{{ $post->user ? $post->user->name : "User Not Found"}}</td>
+        <td>{{ $post->created_at ? date_format($post->created_at , 'Y-M-D') : "No Date" }}</td>
         <td>
-            <x-button class="info" rout="{{ route('posts.show',['post' => $post['id']]) }}">View</x-button>
-            <x-button class="primary" rout="{{ route('posts.edit',['post' => $post['id']]) }}">Edit</x-button>
-            <x-button class="danger" rout="#">Delete</x-button>
+          <x-button class="info" rout="{{ route('posts.show',['post' => $post->id]) }}">View</x-button>
+            <x-button class="primary" rout="{{ route('posts.edit',['post' => $post->id]) }}">Edit</x-button>
+            {{-- <x-button class="danger" rout="#">Delete</x-button> --}}
+
+            <form id="delete-{{$post->id}}" action="{{route('posts.destroy',$post->id)}}" style="display: none;" method="delete">
+              @csrf
+              @method('DELETE')
+             </form>
+             
+             <a class="btn btn-danger"href="#" onclick="if (confirm('Are you sure want to delete this item?')) {
+                        event.preventDefault();
+                        document.getElementById('delete-{{$post->id}}').submit();
+                      }else{
+                        event.preventDefault();
+                      }">
+               
+             Delete</a>
     
         </td>
       </tr>
       @endforeach
     </tbody>
   </table>
+  <script>
+    function contest(){
+    var result = confirm("Want to delete?");
+    if (result) {
+      route('posts.destroy',['post' => $post->id]); 
+    }
+  }
+  </script>
+
 @endsection
