@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class PostFactory extends Factory
 {
@@ -23,8 +22,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'title' => Str::random(10),
-            'description' => Str::random(30),
+            'title' => $this->faker->name,
+            'description' => $this->faker->text,
             'user_id' => 1,
  
         ];
