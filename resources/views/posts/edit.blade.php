@@ -1,3 +1,4 @@
+{{-- @dd($post) --}}
 @extends('layouts.app')
 
 @section('title') Update post @endsection
@@ -10,12 +11,12 @@
     <input type="hidden" name="id" value="{{ $post->id }}">
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title" name="title" value={{ $post->title }} placeholder="Post Title">
+      <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" placeholder="Post Title">
 
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description">{{ $post->description }} </textarea>
+        <textarea class="form-control" id="description" name="description">{{ $post->description }}</textarea>
     </div>
     <div class="form-group">
         <label  for="post_creator">Post Creator</label>

@@ -19,14 +19,6 @@ class CreatePostsTable extends Migration
             $table->text('description');
             $table->timestamps();
         });
-
-        Schema::table('posts', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-        
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
     }
 
     // /**

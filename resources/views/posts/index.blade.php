@@ -46,14 +46,9 @@
       </tr>
       @endforeach
     </tbody>
+   
   </table>
-  <script>
-    function contest(){
-    var result = confirm("Want to delete?");
-    if (result) {
-      route('posts.destroy',['post' => $post->id]); 
-    }
-  }
-  </script>
-
+  {{-- {{$posts->links("pagination::bootstrap-4")}} --}}
+  {{-- another solution --}}
+  {!! $posts->links() !!}
 @endsection
