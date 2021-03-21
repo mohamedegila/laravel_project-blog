@@ -27,7 +27,7 @@
       <h5 class="card-title">Email</h5>
       <p class="card-text">{{ $post->user ? $post->user->email:"User Not Found" }}</p>
       <h5 class="card-title">Created At</h5>
-      <p class="card-text">{{ $post->created_at }}</p>
+      <p class="card-text">{{ $post->created_at ? Carbon\Carbon::parse($post->created_at)->isoFormat('ddd Do \of MMMM YYYY, h:mm:ss a') : "No Date" }}</p>
       
     </div>
   </div>

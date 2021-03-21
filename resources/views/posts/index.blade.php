@@ -22,7 +22,7 @@
         <th scope="row">{{ $post->id }}</th>
         <td>{{ $post->title }}</td>
         <td>{{ $post->user ? $post->user->name : "User Not Found"}}</td>
-        <td>{{ $post->created_at ? date_format($post->created_at , 'Y-M-D') : "No Date" }}</td>
+        <td>{{ $post->created_at ? Carbon\Carbon::parse($post->created_at)->isoFormat('Y-M-D') : "No Date" }}</td>
         <td>
           <x-button class="info" rout="{{ route('posts.show',['post' => $post->id]) }}">View</x-button>
           <x-button class="primary" rout="{{ route('posts.edit',['post' => $post->id]) }}">Edit</x-button>
