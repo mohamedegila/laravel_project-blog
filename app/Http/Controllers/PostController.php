@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -59,10 +60,12 @@ class PostController extends Controller
             $imagePath = $request->file('file');
             $imageName = $imagePath->getClientOriginalName();
 
+            
+
             $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
-            $request->file->move(Storage_path('uploads'), $imageName);
+            // $request->file->move(Storage_path('uploads'), $imageName);
         }
-        $path = '/storage/'.$path;
+        // $path = '/storage/'.$path;
         
         //End-> upload image
         $requestData = $request->all();
@@ -89,5 +92,14 @@ class PostController extends Controller
         $post->delete();
         // dd($post);
         return redirect()->route('posts.index');
+    }
+    
+    public function ajaxShow(Request $request)
+    {
+        // dd($request);
+        $postid = $request->post;
+        $post= Post::find($postid);
+        // dd($post);
+        return view('posts.ajax_show', ['post'=>$post]);
     }
 }

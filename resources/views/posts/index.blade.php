@@ -9,6 +9,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Title</th>
+        <th scope="col">Slag</th>
         <th scope="col">Posted By</th>
         <th scope="col">Created At</th>
         <th scope="col">Actions</th>
@@ -21,6 +22,7 @@
       <tr>
         <th scope="row">{{ $post->id }}</th>
         <td>{{ $post->title }}</td>
+        <td>{{ $post->slug ? $post->slug : "slug not found" }}</td>
         <td>{{ $post->user ? $post->user->name : "User Not Found"}}</td>
         <td>{{ $post->created_at ? Carbon\Carbon::parse($post->created_at)->isoFormat('Y-M-D') : "No Date" }}</td>
         <td>
@@ -29,7 +31,7 @@
           @if ($post->trashed())
             <a class="btn btn-primary" href="{{ route('posts.restore',['post' => $post->id]) }}" id="{{ $post->id }}">Restore</a>
           @else
-
+          <button type="button" class="btn btn-success show-ajax" data-toggle="modal" data-target="#ajax_view" data-ajax="{{$post->id}}" >Info</button>
           <x-button class="info" rout="{{ route('posts.show',['post' => $post->id]) }}">View</x-button>
           <x-button class="primary" rout="{{ route('posts.edit',['post' => $post->id]) }}">Edit</x-button>
           <form id="delete-{{$post->id}}" action="{{route('posts.destroy',$post->id)}}" style="display: none;" method="POST">
@@ -61,8 +63,38 @@
   {{-- another solution --}}
   {!! $posts->links() !!}
 
+{{-- add Modal --}}
+<div id="ajax_view" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">view post</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body" id="ajax_view_content">
+        
+      </div>
+    </div>
+  </div>
+</div>
 
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $('.show-ajax').click(function () {
+        console.log($(this).data('ajax'));
+        $.ajax({
+            url: "{{ route('posts.ajax.show') }}",
+            type: 'get',
+            data: {post: $(this).data('ajax')},
+            success: function (data) {
+              console.log(data);
+              $('#ajax_view_content').html(data);
+            }
+        });
+      });
+    });
+  </script>
 
 @endsection
