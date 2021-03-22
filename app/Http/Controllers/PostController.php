@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -56,7 +57,9 @@ class PostController extends Controller
     public function destroy($postid)
     {
         $post= Post::find($postid);
+        
         $post->delete();
+        // dd($post);
         return redirect()->route('posts.index');
     }
 }
