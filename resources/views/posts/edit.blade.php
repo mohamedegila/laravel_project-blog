@@ -4,11 +4,19 @@
 @section('title') Update post @endsection
 
 @section('content1')
-
-<form method="POST" action="{{ route('posts.update') }}">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<form method="POST" action="{{ route('posts.update',['post' => $post->id ]) }}">
     @csrf
     @method('PUT')
-    <input type="hidden" name="id" value="{{ $post->id }}">
+    {{-- <input type="hidden" name="id" value="{{ $post->id }}"> --}}
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" placeholder="Post Title">
@@ -21,9 +29,10 @@
     <div class="form-group">
         <label  for="post_creator">Post Creator</label>
         <select name="user_id" class="form-control" id="post_creator" >
-            <option value="{{ $post->user ? $post->user->id : "" }}"selected disabled hidden>{{ $post->user ? $post->user->name : "User Not Found" }}</option>
+            {{-- <option value="{{ $post->user ? $post->user->id : "" }}"selected disabled hidden>{{ $post->user ? $post->user->name : "User Not Found" }}</option> --}}
             @foreach ($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name}}</option>
+                <option value="{{ $user->id }}" {{ $post->user->id == $user->id ? "selected": "" }}>{{ $user->name}}</option>
+
             @endforeach
             
         </select>

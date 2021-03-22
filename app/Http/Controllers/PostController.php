@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
 
@@ -11,8 +12,17 @@ class PostController extends Controller
     public function index()
     {
         $posts= Post::withTrashed()->paginate(5);
+
         // $posts= Post::all();
         return view('posts.index', ['posts' => $posts]);
+    }
+
+    public function restore($postid)
+    {
+        $post= Post::withTrashed()->find($postid);
+        // dd($post);
+        $post->restore();
+        return redirect()->route('posts.index');
     }
 
     public function show($postid)
@@ -42,14 +52,13 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function update(StorePostRequest $request)
+    public function update(UpdatePostRequest $request)
     {
+        // dd($request);
         $requestData = $request->all();
-        $postid = $requestData['id'];
+        $postid = $request->post;
         $post= Post::find($postid);
         $post->update($requestData);
-        // dd($requestData);
-        // // PostDB::update('update users set votes = 100 where name = ?', ['John']);
         return redirect()->route('posts.index');
     }
 
