@@ -46,7 +46,27 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+
+        //Start-> upload image
+
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        
+
+        if ($request->file('file')) {
+            $imagePath = $request->file('file');
+            $imageName = $imagePath->getClientOriginalName();
+
+            $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
+            $request->file->move(Storage_path('uploads'), $imageName);
+        }
+        $path = '/storage/'.$path;
+        
+        //End-> upload image
         $requestData = $request->all();
+        $requestData['post_image']=$path;
         // dd($requestData);
         Post::create($requestData);
         return redirect()->route('posts.index');

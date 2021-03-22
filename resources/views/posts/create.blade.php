@@ -12,8 +12,13 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{ route('posts.store') }}">
+<form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
     @csrf
+
+    <div class="form-group">
+      <input type="file" name="file" class="form-control" id="image-input">
+      <span class="text-danger" id="image-input-error"></span>
+  </div>
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" id="title" name="title" placeholder="Post Title">
