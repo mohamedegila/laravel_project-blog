@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
-
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -35,7 +34,7 @@ class PostController extends Controller
         return view('posts.edit', ['post' => $post,'users' =>  $users]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         $requestData = $request->all();
         // dd($requestData);
@@ -43,7 +42,7 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function update(Request $request)
+    public function update(StorePostRequest $request)
     {
         $requestData = $request->all();
         $postid = $requestData['id'];
