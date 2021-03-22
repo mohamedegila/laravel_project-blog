@@ -3,7 +3,7 @@
 
 @section('title') Update post @endsection
 
-@section('content')
+@section('content1')
 
 <form method="POST" action="{{ route('posts.update') }}">
     @csrf

@@ -2,7 +2,7 @@
 
 @section('title') create post @endsection
 
-@section('content')
+@section('content1')
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

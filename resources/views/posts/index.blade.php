@@ -2,7 +2,7 @@
 
 @section('title') posts @endsection
 
-@section('content')
+@section('content1')
 <a class="btn btn-success mb-3" href="{{ route('posts.create') }}" role="button">Create Post</a>
 <table class="table">
     <thead>
