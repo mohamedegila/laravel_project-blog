@@ -14,8 +14,7 @@ class PostController extends Controller
     {
         // dd("here");
         $posts= Post::withTrashed()->paginate(5);
-
-        // $posts= Post::all();
+       
         return view('posts.index', ['posts' => $posts]);
     }
 
