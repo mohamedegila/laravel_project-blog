@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\GithubController;
+
+
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StorageFileController;
 use Illuminate\Support\Facades\Route;
@@ -52,3 +56,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/auth/github', [GithubController::class, 'redirectToGithub']);
+Route::get('/auth/github/callback', [GithubController::class, 'handleGithubCallback']);
+
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);

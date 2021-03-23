@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        dd("here");
+        // dd("here");
         $posts= Post::withTrashed()->paginate(5);
 
         // $posts= Post::all();
